@@ -1,0 +1,1 @@
+<%@ Application Codebehind="Global.asax.cs" Inherits="NeuraDashboards.Global_asax" Language="C#" %>

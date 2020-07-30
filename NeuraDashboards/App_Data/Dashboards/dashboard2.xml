@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="Daily Values" />
+  <DataSources>
+    <SqlDataSource Name="SQL Data Source 2" ComponentName="sqlDataSource1">
+      <Connection Name="NeuraConnectionString" FromAppConfig="true" />
+      <Query Type="SelectQuery" Name="All day">
+        <Tables>
+          <Table Name="vdayservice" Alias="All day" />
+        </Tables>
+        <Columns>
+          <Column Table="All day" Name="day" Alias="Date" />
+          <Column Table="All day" Name="total" Alias="Cost" />
+          <Column Table="All day" Name="serviceUsage" Alias="Consumption" />
+          <Column Table="All day" Name="customer" Alias="Customer" />
+          <Column Table="All day" Name="service" Alias="Service" />
+          <Column Table="All day" Name="LocationName" Alias="Location" />
+          <Column Table="All day" Name="Address" />
+          <Column Table="All day" Name="Email" />
+          <Column Table="All day" Name="Mobile" />
+        </Columns>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Select" DataSource="sqlDataSource1" DataMember="All day">
+      <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
+      <DataItems>
+        <Dimension DataMember="Location" DefaultId="DataItem0" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem2" Name="Customer Details" DataSource="sqlDataSource1" DataMember="All day">
+      <DataItems>
+        <Dimension DataMember="Customer" DefaultId="DataItem0" />
+        <Dimension DataMember="Address" DefaultId="DataItem1" />
+        <Dimension DataMember="Mobile" DefaultId="DataItem2" />
+        <Dimension DataMember="Email" DefaultId="DataItem3" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Weight="62.394957983193279">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="95.7983193277311">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="62.394957983193279">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="79.411764705882348">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="AutoFitToContents" WordWrap="true" />
+    </Grid>
+    <Chart ComponentName="chartDashboardItem1" Name="Cost / day" ShowCaption="false" DataSource="sqlDataSource1" DataMember="All day">
+      <DataItems>
+        <Measure DataMember="Cost" DefaultId="DataItem0" />
+        <Dimension DataMember="Date" DateTimeGroupInterval="None" DefaultId="DataItem1" />
+        <Dimension DataMember="Location" DefaultId="DataItem2" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="ZAR" />
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <Card ComponentName="cardDashboardItem1" Name="Cost Summary" DataSource="sqlDataSource1" DataMember="All day">
+      <DataItems>
+        <Measure DataMember="Cost" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Card Name="ZAR">
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate MinWidth="125" MaxWidth="270" Type="Compact">
+          <MainValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <BottomSubValue1 Visible="true" ValueType="AbsoluteVariation" DimensionIndex="0" />
+          <BottomSubValue2 Visible="true" ValueType="PercentVariation" DimensionIndex="0" />
+          <DeltaIndicator Visible="true" />
+          <Sparkline Visible="true" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <RangeFilter ComponentName="rangeFilterDashboardItem1" Name="Select Range" ShowCaption="true" DataSource="sqlDataSource1" DataMember="All day">
+      <DataItems>
+        <Measure DataMember="Cost" DefaultId="DataItem0" />
+        <Dimension DataMember="Date" DateTimeGroupInterval="None" DefaultId="DataItem1" />
+      </DataItems>
+      <Argument DefaultId="DataItem1" />
+      <Series>
+        <Simple SeriesType="Line">
+          <Value DefaultId="DataItem0" />
+        </Simple>
+      </Series>
+    </RangeFilter>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.96617766867405819">
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="0.46921150340957357" />
+        <LayoutItem DashboardItem="gridDashboardItem2" Weight="2.5668262115351048" />
+        <LayoutItem DashboardItem="cardDashboardItem1" Weight="0.72595933852867178" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="chartDashboardItem1" Weight="1.5890171319659665" />
+      <LayoutItem DashboardItem="rangeFilterDashboardItem1" Weight="0.79588170248021717" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="NEURA DASHBOARD - Details" />
+  <DataSources>
+    <SqlDataSource Name="SQL Data Source 2" ComponentName="sqlDataSource1">
+      <Connection Name="NeuraConnectionString" FromAppConfig="true" />
+      <Query Type="SelectQuery" Name="vperiodservice">
+        <Tables>
+          <Table Name="vperiodservice" />
+        </Tables>
+        <Columns>
+          <Column Table="vperiodservice" Name="Address" />
+          <Column Table="vperiodservice" Name="CustomerAccount" />
+          <Column Table="vperiodservice" Name="ConcessionAreaName" />
+          <Column Table="vperiodservice" Name="LocationName" />
+          <Column Table="vperiodservice" Name="Customer" />
+          <Column Table="vperiodservice" Name="Total" />
+          <Column Table="vperiodservice" Name="Service" />
+          <Column Table="vperiodservice" Name="Unit" />
+          <Column Table="vperiodservice" Name="cAcc" />
+          <Column Table="vperiodservice" Name="Mobile" />
+          <Column Table="vperiodservice" Name="Email" />
+        </Columns>
+      </Query>
+      <Query Type="SelectQuery" Name="Electricity">
+        <Tables>
+          <Table Name="vperiodservice" />
+        </Tables>
+        <Columns>
+          <Column Table="vperiodservice" Name="ServiceUsage" />
+          <Column Table="vperiodservice" Name="ConcessionAreaName" />
+          <Column Table="vperiodservice" Name="LocationName" />
+          <Column Table="vperiodservice" Name="Service" />
+          <Column Table="vperiodservice" Name="Total" />
+          <Column Table="vperiodservice" Name="cAcc" />
+          <Column Table="vperiodservice" Name="Unit" />
+          <Column Table="vperiodservice" Name="Period" />
+        </Columns>
+        <Filter>[Unit] = 0</Filter>
+      </Query>
+      <Query Type="SelectQuery" Name="Water">
+        <Tables>
+          <Table Name="vperiodservice" />
+        </Tables>
+        <Columns>
+          <Column Table="vperiodservice" Name="ConcessionAreaName" />
+          <Column Table="vperiodservice" Name="LocationName" />
+          <Column Table="vperiodservice" Name="Total" />
+          <Column Table="vperiodservice" Name="Service" />
+          <Column Table="vperiodservice" Name="Unit" />
+          <Column Table="vperiodservice" Name="cAcc" />
+          <Column Table="vperiodservice" Name="ServiceUsage" />
+          <Column Table="vperiodservice" Name="Period" />
+        </Columns>
+        <Filter>[Unit] = 2</Filter>
+      </Query>
+      <Query Type="SelectQuery" Name="Graph">
+        <Tables>
+          <Table Name="vperiodservice" />
+        </Tables>
+        <Columns>
+          <Column Table="vperiodservice" Name="ServiceUsage" />
+          <Column Table="vperiodservice" Name="Period" />
+          <Column Table="vperiodservice" Name="LocationName" />
+          <Column Table="vperiodservice" Name="Total" />
+          <Column Table="vperiodservice" Name="Unit" />
+        </Columns>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Select to Display" DataSource="sqlDataSource1" DataMember="vperiodservice" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="LocationName" DefaultId="DataItem0" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Location">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem2" Name="Grid 1" DataSource="sqlDataSource1" DataMember="vperiodservice">
+      <DataItems>
+        <Dimension DataMember="Customer" DefaultId="DataItem0" />
+        <Dimension DataMember="Address" DefaultId="DataItem1" />
+        <Dimension DataMember="CustomerAccount" DefaultId="DataItem2" />
+        <Dimension DataMember="Email" DefaultId="DataItem3" />
+        <Dimension DataMember="Mobile" DefaultId="DataItem4" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Chart ComponentName="chartDashboardItem1" Name="Cost per Period" DataSource="sqlDataSource1" DataMember="Graph">
+      <DataItems>
+        <Measure DataMember="Total" DefaultId="DataItem0" />
+        <Dimension DataMember="Period" DateTimeGroupInterval="DateHour" TopNCount="3" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+        <Dimension DataMember="LocationName" DefaultId="DataItem2" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple>
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <RangeFilter ComponentName="rangeFilterDashboardItem1" Name="Range Filter 1" DataSource="sqlDataSource1" DataMember="Graph" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Measure DataMember="Total" DefaultId="DataItem0" />
+        <Dimension DataMember="Period" DateTimeGroupInterval="DateHour" DefaultId="DataItem1" />
+      </DataItems>
+      <Argument DefaultId="DataItem1" />
+      <Series>
+        <Simple SeriesType="Line">
+          <Value DefaultId="DataItem0" />
+        </Simple>
+      </Series>
+    </RangeFilter>
+    <Card ComponentName="cardDashboardItem1" Name="Water Spend" DataSource="sqlDataSource1" DataMember="Water">
+      <DataItems>
+        <Measure DataMember="Total" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Card Name="Total (ZAR)">
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate MinWidth="100" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem2" Name="Electricity Spend" DataSource="sqlDataSource1" DataMember="Electricity">
+      <DataItems>
+        <Measure DataMember="Total" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Card Name="Total (ZAR)">
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate MinWidth="100" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem3" Name="Water" DataSource="sqlDataSource1" DataMember="Water">
+      <DataItems>
+        <Measure DataMember="ServiceUsage" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Card Name="Usage (kl)">
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate MinWidth="100" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem5" Name="Electricity" DataSource="sqlDataSource1" DataMember="Electricity">
+      <DataItems>
+        <Measure DataMember="ServiceUsage" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Card Name="Usage (kWh)">
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate MinWidth="100" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="1.3342992810235506">
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="0.29023434730966774" />
+        <LayoutGroup Orientation="Vertical" Weight="1.7097656526903324">
+          <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.632520864791229" />
+          <LayoutGroup Weight="1.632520864791229">
+            <LayoutItem DashboardItem="cardDashboardItem5" Weight="1.2370155300123256" />
+            <LayoutItem DashboardItem="cardDashboardItem3" Weight="1.5243929194197248" />
+            <LayoutItem DashboardItem="cardDashboardItem2" Weight="1.523005602859496" />
+            <LayoutItem DashboardItem="cardDashboardItem1" Weight="1.632520864791229" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </LayoutGroup>
+      <LayoutItem DashboardItem="chartDashboardItem1" Weight="1.0193723227090883" />
+      <LayoutItem DashboardItem="rangeFilterDashboardItem1" Weight="0.64632839626736116" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>
